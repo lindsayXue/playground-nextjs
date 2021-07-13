@@ -1,9 +1,19 @@
+import { useState } from 'react'
+import { connect } from "react-redux"
+import { setInfo } from "../redux/actions/main"
 import { getPageData } from 'pages/api/page'
 import Head from 'next/head'
 import Header from 'components/layout/header'
 import styles from './Home.module.css'
 
-export default function Home({ data }) {
+const Home = (props) => {
+  const { name, setInfo } = props
+  const [ newName, setNewName ] = useState('');
+
+  const changeHandler = (e) => {
+    setNewName(e.target.value);
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -16,6 +26,11 @@ export default function Home({ data }) {
         <h1>
           Here is a Homepage for Nextjs!!!
         </h1>
+       <div className={styles.inputGroup}>
+        <input className={styles.input}type="text" value={newName} onChange={changeHandler}></input>
+        <button onClick={() => setInfo(newName)}>Test set info</button>
+       </div>
+        <h2>Redux works!!! {name}</h2>
       </main>
     </div>
   )
@@ -37,4 +52,15 @@ export const getStaticProps =  async (context) => {
       }
   }
 }
+
+const mapStateToProps = state => {
+  return { name: state.main.name }
+ }
+ 
+ const mapDispatchToProps = {
+  setInfo
+ }
+
+ export default connect(mapStateToProps, mapDispatchToProps)(Home);
+
 
