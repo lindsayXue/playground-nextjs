@@ -12,7 +12,7 @@ export const getPageData = async (slugArr) => {
   }
 
 
-  const response = await fetch(`https://api.uat.rfaweb.co.nz/v2/corporate/pages?slug=${slug}&parent=${parent}`)
+  const response = await fetch();
 
   return response.json()
 }
